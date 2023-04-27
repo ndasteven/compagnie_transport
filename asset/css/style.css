@@ -1,0 +1,42 @@
+body {
+    background-color: #ffffff; /* couleur de fond blanc pour le body */
+  }
+  
+  .container {
+    height: 100vh; /* hauteur de la carte */
+  }
+  
+  .card {
+    width: 400px; /* largeur de la carte */
+    margin-top: -100px; /* pour centrer la carte */
+    background: linear-gradient(to right top, #ffa000, #ffd54f); /* dégradé pour la carte */
+  }
+  
+  .card-header {
+    background-color: #ffa000; /* couleur d'en-tête */
+    color: white; /* couleur du texte d'en-tête */
+  }
+  
+  .form-control:focus {
+    border-color: #ffa000; /* couleur de bordure du champ actif */
+    box-shadow: 0 0 0 0.25rem rgba(255, 160, 0, 0.25); /* effet d'ombre */
+  }
+  
+  .btn-primary {
+    background-color: #ffa000; /* couleur du bouton */
+    border-color: #ffa000; /* couleur de bordure du bouton */
+  }
+  
+  .btn-primary:hover {
+    background-color: #ff8f00; /* couleur de survol du bouton */
+    border-color: #ff8f00; /* couleur de bordure de survol du bouton */
+  }
+  
+  .navbar-brand {
+    font-weight: bold; /* police en gras */
+  }
+  
+  .navbar-nav .nav-link {
+    font-weight: bold; /* police en gras */
+  }
+  

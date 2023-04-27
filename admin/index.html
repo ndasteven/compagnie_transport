@@ -1,0 +1,63 @@
+
+<div id="main" style="display: none;">
+
+    <!--header-->
+    <index class='header'></index>
+    <!--fin header-->
+    <!--home page-->
+    <div class="page-wrapper" style="height: auto; margin-top: -38px;">
+        <div class="page-content">
+          <!--home page content-->
+         <div class="main col-12 mx-auto" style="margin-top: px;"></div>  
+          <!--Fin home page content-->
+        </div>
+    </div>  
+    <!-- fin home page-->
+
+    <!--footer-->
+    <div class='footer'></div>
+    <!--fin footer-->
+
+    <!--bouton de changement de theme-->
+    <div class="change_theme"></div>
+    <!--fin de bouton de changement de theme-->
+</div>
+
+<div class="loading">
+    chargement....
+</div>
+
+
+
+
+
+<script src="assets/js/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    
+    $('.header').load('header.html')
+    $('.footer').load('footer.html')
+    $('.change_theme').load('change_theme.html')
+    $('.main').load('home.html')  
+
+});
+</script>
+<script>
+    window.addEventListener('load', function(){
+   
+    console.log('charger')
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'index.html', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            $('#main').css({'display':'block'})
+            $('.loading').css({'display':'none'})
+          // Traitement de la réponse ici
+          //var data = JSON.parse(xhr.responseText);// en fonction du coockie de page dans le fichier roote.php il affiche ca page
+          console.log('chargement terminer');
+        }
+    }
+    xhr.send()
+})
+
+</script>

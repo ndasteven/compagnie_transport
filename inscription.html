@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Créer un utilisateur</title>
+  <link href="asset/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="asset/css/style.css">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="logo.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+        Mon Site
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Créer un compte</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container d-flex justify-content-center align-items-center">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="text-center">Créer un compte</h3>
+      </div>
+      <div class="card-body">
+        <form method="post" >
+         
+          <div class="mb-3">
+            <label for="nom" class="form-label">Nom</label>
+            <input type="text" class="form-control" id="nom">
+          </div>
+          <div class="mb-3">
+            <label for="prenom" class="form-label">Prenom</label>
+            <input type="text"  class="form-control" id="prenom">
+          </div>
+          <div class="mb-3">
+            <label for="utilisateur" class="form-label">Nom utilisateur</label>
+            <input type="text"  class="form-control" id="username">
+            <div class="invalid-feedback" id="user_exist">
+            </div>
+        
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Mot de passe</label>
+            <input type="password" password="password" class="form-control " id="password">
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Confirmer mot de passe</label>
+            <input type="password" password="password" class="form-control" id="re_password">
+          </div>
+          <div class="d-grid gap-2">
+            <button type="submit" id="login-form" class="btn btn-primary btnk">Connexion</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="asset/js/jquery-3-6.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <script src="asset/js/bootstrap-5-3.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  <script src="asset/js/sweetAlert.js"></script>
+  <script>
+  $(document).ready(function() {
+    // Intercepter l'événement de soumission du formulaire de connexion
+    $(".btnk").on('click',function(event) {
+      // Empêcher le formulaire de se soumettre normalement
+      event.preventDefault();
+      
+      // Récupérer les données du formulaire
+      var nom = $("#nom").val();
+      var prenom = $("#prenom").val();
+      var username = $("#username").val();
+      var password = $("#password").val();
+      var re_password = $("#re_password").val();
+  
+      // Envoyer les données du formulaire en utilisant AJAX
+      $.ajax({
+        type: "POST",
+        url: "inscription.php",
+        data: {
+          nom:nom,
+          prenom:prenom,
+          username: username,
+          password: password,
+          re_password: re_password
+        },
+        success: function(response) {
+          // Si le traitement est réussi, afficher le message de succès et rediriger vers la page d'accueil
+          var response = JSON.parse(response);
+          if (response.valid=='valid') {
+            Swal.fire({
+                  icon: 'success',
+                  title: 'Utilisateur créé',
+                  cancelButtonText:'Cancel' 
+              })
+              window.setInterval(()=>{
+                  //window.location.href= 'compte.html'
+                }, 1000)
+          }
+          if (response.valid=='error') {
+            $("#message").text(response).removeClass("text-success").addClass("text-success");
+            Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Vérifiez les informations saisies!',
+                  footer: '<a href="">Avez-vous oublié votre mot de passe?</a>'
+                })
+          }
+          if (response.samepasse=='error') {
+            $("#re_password").addClass('is-invalid').removeClass('is-valid')
+            $("#password").addClass('is-invalid').removeClass('is-valid')
+          }else{
+            $("#re_password").addClass('is-valid').removeClass('is-invalid')
+            $("#password").addClass('is-valid').removeClass('is-invalid')
+          }
+
+          if (response.user=='error') {
+            $("#user_exist").text('nom utilisateur existe déjà')
+            $("#username").addClass('is-invalid').removeClass('is-valid')
+            $('#user_exist').addClass('invalid-feedback').removeClass('valid-feedback')
+          }else{
+            $("#user_exist").text('')
+            $("#username").addClass('is-valid').removeClass('is-invalid')
+            $('#user_exist').addClass('valid-feedback').removeClass('invalid-feedback')
+          }
+               
+        },
+       
+      });
+    });
+
+  });
+  </script>
+  
+</body>
+</html>

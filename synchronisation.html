@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synchronisation DATA</title>
+    <link href="asset/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+
+    <h1 >Statut de mise à jour : <span id="synchrone"></span></h1>
+
+    <script src="asset/js/jquery-3-6.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="asset/js/bootstrap-5-3.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    
+
+    <script>
+            $(document).ready(function() {
+            //script de vefication nternet toute les 1min
+            $('#synchrone').text('n\'est à jour').css({'color':'red'})
+            setInterval(function() {
+            $.ajax({
+                
+            type:"POST",
+            url:'synchronisation.php',
+            data:{
+            test_connection:"test"
+            },
+            success: function(response) {
+            var response = JSON.parse(response);
+            console.log(response.connexion);
+            if (response.statut_mise_ajour =='valid') {
+                $('#synchrone').text('tout est à jour').css({'color':'green'})
+            }else{
+                $('#synchrone').text('n\'est à jour').css({'color':'red'})
+            }
+            }
+        });
+        }, 10000);
+
+//fin script de verification
+        })
+    </script>
+</body>
+</html>
