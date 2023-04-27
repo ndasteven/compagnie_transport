@@ -9,7 +9,7 @@
                     <a class="dropdown-toggle dropdown-toggle-nocaret" href="#" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded font-22 text-option'></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="javascript:;">Ajouter un utilisateur</a>
+                        <li><a class="dropdown-item addUser" href="javascript:;">Ajouter un utilisateur</a>
                         </li>
                         <li><a class="dropdown-item" href="javascript:;">Modifier un utilisateur</a>
                         </li>
@@ -113,6 +113,8 @@
 
         <script>
         $(document).ready(function() {
-
+          $('.addUser').on('click',()=>{
+            $('.info-user').css({'display':'none'})
+          })
         });
         </script>
