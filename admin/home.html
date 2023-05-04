@@ -214,30 +214,30 @@
                 <div class="row mb-3">
                   <label for="input35" class="col-sm-3 col-form-label">Nom utilisateur</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" id="input35" placeholder="Entrer nom utilisateur">
+                    <input type="text" class="form-control nom" id="input35" placeholder="Entrer nom utilisateur">
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="input36" class="col-sm-3 col-form-label">Prenom utilisateur</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" id="input36" placeholder="Entrer prenom utilisateur">
+                    <input type="text" class="form-control prenom" id="input36" placeholder="Entrer prenom utilisateur">
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="input37" class="col-sm-3 col-form-label">Date de naissance</label>
                   <div class="col-sm-9">
-                    <input type="date" class="form-control" id="input37" placeholder="selectionner la date de naissance utilisateur">
+                    <input type="date" class="form-control date_naissance" id="input37" placeholder="selectionner la date de naissance utilisateur">
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="input38" class="col-sm-3 col-form-label">Pseudo utilisateur</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" id="input38" placeholder="choisir Pseudo utilisateur">
+                    <input type="text" class="form-control pseudo" id="input38" placeholder="choisir Pseudo utilisateur">
                   </div>
                 </div>
                 
                 <div class="row mb-3">
-                  <label for="input38" class="col-sm-3 col-form-label">Mot de passe utilisateur</label>
+                  <label for="input38" class="col-sm-3 col-form-label password">Mot de passe utilisateur</label>
                   <div class="col-sm-9">
                     <input type="text" class="form-control" id="input38" placeholder="Mot de passe de l'utilisateur">
                   </div>
@@ -245,14 +245,14 @@
                 <div class="row mb-3">
                   <label for="input39" class="col-sm-3 col-form-label">GARE de l'utilisateur</label>
                   <div class="col-sm-9">
-                    <select class="form-select" id="option_gare">
+                    <select class="form-select gare_user" id="option_gare">
                     </select>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="input40" class="col-sm-3 col-form-label">Numéro de Tel</label>
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" id="input38" placeholder="Numéro de Téléphone de l'utilisateur">
+                    <input type="text" class="form-control tel" id="input38" placeholder="Numéro de Téléphone de l'utilisateur">
                   </div>
                 </div>
                 <div class="row">
@@ -274,6 +274,11 @@
             $(document).ready(function() {
               //script pour creer utilisateurs
               $('.addUser').on('click',()=>{
+                if ($('.nom').val().length >= 2 && $('.prenom').val().length >= 2 && $('.date_naissance').val().length >= 2 && $('.pseudo').val().length >= 2 && $('.password').val().length >= 5 && $('.gare_user').val().length >= 2 && $('.tel').val().length >= 10  ) {
+                  
+                }else{
+                  $('error_user').text('entrer les informations utilisateur valide')
+                }
                 $('.info-user').css({'display':'none'})
                 $('.formUser').css({'display':'block'})
               })
@@ -329,7 +334,8 @@
               })
               //fin enregistrement d'une gare
               //script pour lister les gare
-              $.ajax({
+              setInterval(() => {
+             $.ajax({
               url: "vue.php",
               success: function(data) {
                 var response = JSON.parse(data)
@@ -337,9 +343,13 @@
                 var option_gare = response.map(item =>'<option value="'+item.id_Gare+' ">'+item.nom_Gare+'</option>'  ).join(' ')
                 var liste_gare =response.map(item=> '<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">'+item.nom_Gare+'<span class="badge bg-danger rounded-pill">10</span></li>').join(' ')
                 $('#option_gare').html(option_gare)
-                $('#list_gare').html(liste_gare) 
+                $('#list_gare').html(liste_gare)
+                var nombre_gare=Object.keys(response).length
+                $('#nombre_gare').html(nombre_gare)
               }
               });
+              }, 6000);// à chaque 1min il cheque la base pour voir si il n'y a pas de nouvelle mise à jour
+             
               //fin script pour lister les gare
 
             });
