@@ -294,7 +294,7 @@
                   var myData = {
                     user_nom: $('.nom').val(),
                     user_prenom: $('.prenom').val(),
-                    user_date_naissance: $('.prenom').val(),
+                    user_date_naissance: $('.date_naissance').val(),
                     user_pseudo: $('.pseudo').val(),
                     user_password: $('.password').val(),
                     user_gare: $('.gare_user').val(),
@@ -371,7 +371,7 @@
               })
               //fin enregistrement d'une gare
               //script pour lister les gare
-              setInterval(() => {
+             setInterval(() => {
              $.ajax({
               url: "vue.php",
               success: function(data) {
@@ -385,7 +385,7 @@
               
               }
               });
-              }, 6000);// à chaque 1min il cheque la base pour voir si il n'y a pas de nouvelle mise à jour
+              }, 10000);// à chaque 1min il cheque la base pour voir si il n'y a pas de nouvelle mise à jour
              
               //fin script pour lister les gare
 
