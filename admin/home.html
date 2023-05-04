@@ -211,6 +211,9 @@
             <div class="card">
             <div class="card-body p-4">
               <h5 class="mb-4">Renseignez les information du nouveau utilisateurs</h5>
+              <div>
+                <p class="error_user" style="color: red;"></p>
+              </div>
                 <div class="row mb-3">
                   <label for="input35" class="col-sm-3 col-form-label">Nom utilisateur</label>
                   <div class="col-sm-9">
@@ -259,7 +262,7 @@
                   <label class="col-sm-3 col-form-label"></label>
                   <div class="col-sm-9">
                     <div class="d-md-flex d-grid align-items-center gap-3">
-                      <button type="button" class="btn btn-primary px-4">Enregistrer l'utilisateur</button>
+                      <button type="button" class="btn btn-primary px-4 valid valide_user">Enregistrer l'utilisateur</button>
                       <button type="button" class="btn btn-light annuler px-4">Annuler</button>
                     </div>
                   </div>
@@ -274,11 +277,7 @@
             $(document).ready(function() {
               //script pour creer utilisateurs
               $('.addUser').on('click',()=>{
-                if ($('.nom').val().length >= 2 && $('.prenom').val().length >= 2 && $('.date_naissance').val().length >= 2 && $('.pseudo').val().length >= 2 && $('.password').val().length >= 5 && $('.gare_user').val().length >= 2 && $('.tel').val().length >= 10  ) {
-                  
-                }else{
-                  $('error_user').text('entrer les informations utilisateur valide')
-                }
+                
                 $('.info-user').css({'display':'none'})
                 $('.formUser').css({'display':'block'})
               })
@@ -288,6 +287,39 @@
                 $('.formGare').css({'display':'none'})
               })
               //fin script pour creer utilisateurs
+
+              //enregistrer utilisateur
+              $('.valide_user').on('click', function(){
+                if ($('.nom').val().length >= 2 && $('.prenom').val().length >= 2 && $('.date_naissance').val().length >= 2 && $('.pseudo').val().length >= 2 && $('.password').val().length >= 5 && $('.gare_user').val().length >= 2 && $('.tel').val().length >= 10  ) {
+                  var myData = {
+                    gare_name: $('.gare_name').val(),
+                    gare_position: $('.gare_position').val()
+                  }
+                  $('.error_user').text('')
+                  $.ajax({
+                    type: "POST",
+                    url: "controlleur.php",
+                    data: myData,
+                    success: function(response) {
+                      var message = JSON.parse(response)
+                      $('.error_gare').text(message).css({'color':'green'})
+                      $('.retour').css({
+                        'display':'block'
+                      })
+                      $('.form_gare').css({
+                        'display':'none'
+                      })
+                    },
+                    error: function(xhr, status, error) {
+                      console.error("AJAX error:", status, error);
+                      
+                    }
+                  })
+                }else{
+                  $('.error_user').text('entrer les informations utilisateur valident')
+                }
+              })
+              //fin enregistrer utilisateur
 
               //script pour creer Gare
               $('.addGare').on('click',()=>{
