@@ -290,10 +290,16 @@
 
               //enregistrer utilisateur
               $('.valide_user').on('click', function(){
+                alert($('.gare_user').val())
                 if ($('.nom').val().length >= 2 && $('.prenom').val().length >= 2 && $('.date_naissance').val().length >= 2 && $('.pseudo').val().length >= 2 && $('.password').val().length >= 5 && $('.gare_user').val().length >= 2 && $('.tel').val().length >= 10  ) {
                   var myData = {
-                    gare_name: $('.gare_name').val(),
-                    gare_position: $('.gare_position').val()
+                    user_nom: $('.nom').val(),
+                    user_prenom: $('.prenom').val(),
+                    user_date_naissance: $('.prenom').val(),
+                    user_pseudo: $('.pseudo').val(),
+                    user_password: $('.password').val(),
+                    user_gare: $('.gare_user').val(),
+                    user_tel: $('.tel').val(),
                   }
                   $('.error_user').text('')
                   $.ajax({
