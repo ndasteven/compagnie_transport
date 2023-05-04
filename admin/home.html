@@ -8,28 +8,30 @@
                 <div class="card-header">
                 <div class="d-flex align-items-center">
                 <div>
-                  <h6 class="mb-0">Les GARES</h6>
+                  <h6 class="mb-0">GARES</h6>
                 </div>
                 <div class="dropdown ms-auto">
                   <a class="dropdown-toggle dropdown-toggle-nocaret" href="#" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded font-22 text-option'></i>
                   </a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="javascript:;">Action</a>
+                    <li><a class="dropdown-item addGare" href="javascript:;">Créer une Gare</a>
                     </li>
-                    <li><a class="dropdown-item" href="javascript:;">Another action</a>
+                    <li><a class="dropdown-item" href="javascript:;">Modifier une gare</a>
                     </li>
                     <li>
                       <hr class="dropdown-divider">
                     </li>
-                    <li><a class="dropdown-item" href="javascript:;">Something else here</a>
+                    <li><a class="dropdown-item" href="javascript:;">Supprimer une gare</a>
                     </li>
                   </ul>
                 </div>
                 </div>
                 </div>
                 <div class="card-body">
-                <div class="chart-container-2">
-                <canvas id="chart2"></canvas>
+                <div class="chart-container-2 row">
+                  <div class="col-md-12">
+                     <img src="assets/images/gare.avif" style="max-width: 100%;" alt="">
+                  </div>
                 </div>
                 </div>
                 <ul class="list-group list-group-flush">
@@ -160,9 +162,42 @@
              
       </div>
 <!--fin tableau info utilisateur-->
-    </div>
+  </div>
     <!--fin information home-->
 
+    <!--formulaire pour creer Gare-->
+    <div class="row formGare" style="display: none;">
+      <div class="col-lg-8 mx-auto">
+        <div class="card">
+        <div class="card-body p-4">
+          <h5 class="mb-4">Renseignez les informations de la GARE</h5>
+            <div class="row mb-3">
+              <label for="input35" class="col-sm-3 col-form-label">Nom de la GARE</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="input35" placeholder="Entrer nom utilisateur">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="input35" class="col-sm-3 col-form-label">Situation Géographique</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="input35" placeholder="Entrer la situation géographique de la GARE">
+              </div>
+            </div>
+
+            <div class="row">
+              <label class="col-sm-3 col-form-label"></label>
+              <div class="col-sm-9">
+                <div class="d-md-flex d-grid align-items-center gap-3">
+                  <button type="button" class="btn btn-primary px-4">Enregistrer la Gare</button>
+                  <button type="button" class="btn btn-light annuler px-4">Annuler</button>
+                </div>
+              </div>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <!--fin formulaire pour creer Gare-->
     <!--formulaire pour creer utilisateur-->
     <div class="row formUser" style="display: none;">
           <div class="col-lg-8 mx-auto">
@@ -233,6 +268,7 @@
 
             <script>
             $(document).ready(function() {
+              //script pour creer utilisateurs
               $('.addUser').on('click',()=>{
                 $('.info-user').css({'display':'none'})
                 $('.formUser').css({'display':'block'})
@@ -240,6 +276,20 @@
               $('.annuler').on('click',()=>{
                 $('.info-user').css({'display':'block'})
                 $('.formUser').css({'display':'none'})
+                $('.formGare').css({'display':'none'})
               })
+              //fin script pour creer utilisateurs
+
+              //script pour creer Gare
+              $('.addGare').on('click',()=>{
+                $('.info-user').css({'display':'none'})
+                $('.formGare').css({'display':'block'})
+              })
+              $('.annuler').on('click',()=>{
+                $('.info-user').css({'display':'block'})
+                $('.formGare').css({'display':'none'})
+                $('.formUser').css({'display':'none'})
+              })
+              //fin script pour creer Gare
             });
             </script>
