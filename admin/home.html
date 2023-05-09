@@ -8,7 +8,7 @@
                 <div class="card-header">
                 <div class="d-flex align-items-center">
                 <div>
-                  <h6 class="mb-0">GARES </h6>
+                  <h6 class="mb-0">GARES 111</h6>
                 </div>
                 <div class="dropdown ms-auto">
                   <a class="dropdown-toggle dropdown-toggle-nocaret" href="#" data-bs-toggle="dropdown"><i class='bx bx-dots-horizontal-rounded font-22 text-option'></i>
@@ -75,22 +75,25 @@
                    <th>Gare</th>
                    <th>Tickets vendu</th>
                    <th>Montant total Tickets</th>
-                   <th>Shipping</th>
+                   <th>Ville</th>
+                   <th>Taux de vente</th>
                  </tr>
                  </thead>
-                 <tbody>
-                  <tr class="user-info">
+                 <tbody class="user_info">
+                  <tr class="user_info">
                   <td>Nom</td>
                   <td>Prenom</td>
                   <td>07070707</td>
                   <td>UTB</td>
                   <td>700</td>
                   <td>1250.00CFA</td>
+                  <td>Abidjan</td>
                   <td>
-                    <div class="progress" style="height: 6px;">
-                        <div class="progress-bar bg-gradient-quepal" role="progressbar" style="width: 100%"></div>
+                    <div class="progress bg-light-danger row" style="height: 6px ; border: solid 1px gray;">
+                        <div class="progress-bar bg-gradient-quepal " role="progressbar" style="width: 100%"></div>
                     </div>
-                    </td>
+                  </td>
+                  <td>12%</td>
                  </tr>
                 </tbody>
               </table>
@@ -319,20 +322,23 @@
               //fin enregistrement d'une gare
               //script pour lister les gare
               setInterval(() => {
+                
               $.ajax({
               type: "POST",
               url: "vue.php",
               data: '',
               success: function(data) {
+                
                 var response = JSON.parse(data)
+                var total_prix_ticket = response.TOTAL_PRIX_TICKET.map(item=>item.montant_total_ticket)
                 var option_gare = response.gare.map(item =>'<option value="'+item.id_gare+' ">'+item.nom_Gare+'</option>'  ).join(' ')
                 var liste_gare =response.gare.map(item=> '<li class="list-group-item d-flex bg-transparent justify-content-between align-items-center">'+item.nom_Gare+'<span class="badge bg-danger rounded-pill">10</span></li>').join(' ')
                 $('#option_gare').html(option_gare)
                 $('#list_gare').html(liste_gare)
-                var nombre_gare=Object.keys(response).length
+                var nombre_gare=Object.keys(response.gare).length // donne le nombre de id de la gare
                 $('#nombre_gare').html(nombre_gare)
-                var liste_user = response.user.map(item=>'<td>'+item.nom_Utilisateurs+'</td><td>'+item.prenom_Utilisateurs+'</td><td>'+item.tel_Utilisateurs+'</td><td>UTB</td><td>700</td><td>1250.00CFA</td>')
-                $('.user-info').html(liste_user)
+                var liste_user = response.user.map(item=>'<tr><td>'+item.nom_Utilisateurs+'</td><td>'+item.prenom_Utilisateurs+'</td><td>'+item.tel_Utilisateurs+'</td><td>'+item.nom_Gare+'</td><td>'+item.nbre_ticket+'</td><td>'+item.total_ticket+'cfa</td><td>'+item.situation_geographique_Gare+'</td><td><div class="progress bg-light-danger" style="height: 6px ; "><div class="progress-bar bg-gradient-quepal" role="progressbar" style="width: '+(100*parseFloat(item.total_ticket)/parseFloat(total_prix_ticket)).toFixed(0)+'"></div></div></td><td style="font-size:11px">'+(100*parseFloat(item.total_ticket)/parseFloat(total_prix_ticket)).toFixed(2)+'%</td><tr>')
+                $('.user_info').html(liste_user)
               }
               }); 
               }, 3000);
