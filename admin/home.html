@@ -35,6 +35,7 @@
                 </div>
                 </div>
                 <ul class="list-group list-group-flush" id="list_gare">
+                  <img src="assets/images/ajax-loader.gif" height="50" width="50" alt="">
                 </ul>
                 </div>
           </div>
@@ -80,8 +81,8 @@
                  </tr>
                  </thead>
                  <tbody class="user_info" style="font-size: 12px;">
-                  <tr>
-                    <td style="text-align: center;">chargement......</td>
+                  <tr style="text-align: center;">
+                    <td style="text-align: center;"><img src="assets/images/ajax-loader.gif" height="50" width="50" alt=""></td>
                   </tr>
                  </tbody>
               </table>
@@ -329,7 +330,7 @@
                 $('#list_gare').html(nbre_ticket_gare)
               }
               }); 
-              }, 3000);
+              }, 10000);
             
               
              
