@@ -15,7 +15,6 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
         if ($user["login_Utilisateurs"] === $username AND $user['password_Utilisateurs']===$password) {
             // Si les informations sont correctes, créer une session pour l'utilisateur
             $_SESSION["user_id"] = $user["id_utilisateurs"];
-            $_SESSION["nom_utilisateur"] = $user["nom_Utilisateurs"];
             //header("Location: index.php");
             // Si les informations sont incorrectes, afficher un message d'erreur
             $message = array(
@@ -33,9 +32,20 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
     
 }
 if (isset($_SESSION["user_id"])) {
-    $message = array(
-        'status'=>'valid'
-    );
+        //requete pour selectionner toute les Utilisateurs
+        $sql = "SELECT Utilisateurs.*, Gare.nom_Gare, COUNT(Ticket.id_ticket) as nbre_ticket, SUM(Ticket.prix_Ticket) as total_ticket
+        FROM Utilisateurs LEFT JOIN Gare ON Utilisateurs.id_gare = Gare.id_gare
+        LEFT JOIN Ticket ON Utilisateurs.id_utilisateurs = Ticket.id_utilisateurs 
+        WHERE Utilisateurs.id_utilisateurs =:id_user";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(array(
+            'id_user'=>$_SESSION["user_id"]
+        ));
+        $USERS = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $message = array(
+            'status'=>'valid',
+            'user'=>$USERS
+        );
 }
 
 if (isset($_POST["logout"])) {
