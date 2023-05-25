@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--favicon-->
+	<link rel="icon" href="admin/assets/images/favicon-32x32.png" type="image/png" />
+	<!--plugins-->
+	<link href="admin/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+	<link href="admin/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+	<link href="admin/assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+	<!-- loader-->
+	<link href="admin/assets/css/pace.min.css" rel="stylesheet" />
+	<script src="admin/assets/js/pace.min.js"></script>
+	<!-- Bootstrap CSS -->
+	<link href="admin/assets/css/bootstrap.min.css" rel="stylesheet">
+	<link href="admin/assets/css/bootstrap-extended.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+	<link href="admin/assets/css/app.css" rel="stylesheet">
+	<link href="admin/assets/css/icons.css" rel="stylesheet">
+	<title>Se connecter</title>
+</head>
+
+<body class="">
+	<!--wrapper-->
+	<div class="wrapper">
+		<header class="login-header shadow">
+			<nav class="navbar navbar-expand-lg navbar-light rounded-0 bg-white fixed-top rounded-0 shadow-none border-bottom">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="#">
+						<img src="admin/assets/images/logo-img.png" width="140" alt="" />
+					</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
+					</button>
+					
+				</div>
+			</nav>
+		</header>
+		<div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-4">
+			<div class="container">
+				<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
+					<div class="col mx-auto">
+						<div class="card my-5 my-lg-0 shadow-none border">
+							<div class="card-body">
+								<div class="p-4">
+									<div class="text-center mb-4">
+										<h5 class="">Bonjour </h5>
+										<p class="mb-0">Veillez vous connecter à votre compte</p>
+									</div>
+									<div class="form-body">
+										<form class="row g-3">
+											<div class="col-12">
+												<label for="inputEmailAddress" class="form-label">Pseudo</label>
+												<input type="text" class="form-control pseudo" id="inputEmailAddress" placeholder="Votre pseudo">
+											</div>
+											<div class="col-12">
+												<label for="inputChoosePassword" class="form-label">Mot de passe</label>
+												<div class="input-group" id="show_hide_password">
+													<input type="password" class="form-control border-end-0 password" id="inputChoosePassword"  placeholder="Entrer votre mot de passe"> 
+													<a href="javascript:;" class="input-group-text"><i class='bx bx-hide'></i></a>
+												</div>
+											</div>
+											
+											
+											<div class="col-12 mt-5">
+												<div class="d-grid">
+													<button type="submit" class="btn btn-primary signin">Sign in</button>
+												</div>
+											</div>
+											
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--end row-->
+			</div>
+		</div>
+		<footer class="bg-white shadow-none border-top p-2 text-center fixed-bottom">
+			<p class="mb-0">Copyright © 2022. All right reserved.</p>
+		</footer>
+	</div>
+	<!--end wrapper-->
+	<!-- Bootstrap JS -->
+	<script src="admin/assets/js/bootstrap.bundle.min.js"></script>
+	<!--plugins-->
+	<script src="admin/assets/js/jquery.min.js"></script>
+	<script src="admin/assets/plugins/simplebar/js/simplebar.min.js"></script>
+	<script src="admin/assets/plugins/metismenu/js/metisMenu.min.js"></script>
+	<script src="admin/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+	<!--Password show & hide js -->
+	<script>
+		$(document).ready(function () {
+			$.ajax({
+					url:'login.php',
+					method:'GET',
+					data:'',
+					success:function(data){
+						var response = JSON.parse(data)
+						if (response.status=='valid') {
+							window.location.href='user-profile.html'
+						}
+					}
+				})
+			$("#show_hide_password a").on('click', function (event) {
+				event.preventDefault();
+				if ($('#show_hide_password input').attr("type") == "text") {
+					$('#show_hide_password input').attr('type', 'password');
+					$('#show_hide_password i').addClass("bx-hide");
+					$('#show_hide_password i').removeClass("bx-show");
+				} else if ($('#show_hide_password input').attr("type") == "password") {
+					$('#show_hide_password input').attr('type', 'text');
+					$('#show_hide_password i').removeClass("bx-hide");
+					$('#show_hide_password i').addClass("bx-show");
+				}
+			});
+			$('.signin').on('click', function(e){
+				e.preventDefault()
+				$.ajax({
+					url:'login.php',
+					method:'POST',
+					data:{
+						'username':$('.pseudo').val(),
+						'password':$('.password').val()
+					},
+					success:function(data){
+						var response = JSON.parse(data)
+						if (response.status=='valid') {
+							window.location.href='user-profile.html'
+						}else{
+							alert('mot de passe invalid')
+						}
+					}
+				})
+			})
+			
+		});
+	</script>
+	<!--app JS-->
+	<script src="admin/assets/js/app.js"></script>
+</body>
+
+</html>

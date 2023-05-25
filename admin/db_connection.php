@@ -2,7 +2,7 @@
 session_start();
 
 // Connexion à la base de données
-$data_base = 'compagnie_TP';
+$data_base = 'compagnie_TPs';
 $serveur = 'localhost';
 $username = 'root';
 $password = '';
